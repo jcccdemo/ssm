@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+	<settings>
+    <!--在控制台打印SQL查询语句 -->
+        <setting name="logImpl" value="LOG4J" />
+    </settings>
+
+	<!-- 设置别名 -->
+ 	<typeAliases>
+ 		<!-- 批量别名设置 -->
+		<!-- 指定包路径，自动扫描包下面所有的实体类，定义别名，别名默认为类名(首字母小写大写都可以) -->
+		<!-- 指定别名后，mapper.xml配置文件中POJO类可以简写类型，不需要写类的全限定名 -->
+ 		<package name="com.entity"/>
+ 	</typeAliases>
+	
+	<!-- 因已完全遵循编写规范使用Mapper接口开发方式，故无需配置mapper -->
+	<!-- 配置mapper -->
+	<!-- <mappers>
+		<mapper resource="com/ncvt/mapper/CustomerMapper.xml"/>
+		<mapper resource="com/ncvt/mapper/UserMapper.xml"/>
+	</mappers> -->
+	
+
+</configuration>

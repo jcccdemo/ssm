@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.mapper.CustomerMapper">
+
+    <!-- 查询指定 -->
+    <select id="selectAllFun" resultType="Customer">
+ 		select * from t_customer
+ 	</select>
+    
+<!--    根据主键删除-->
+    <delete id="deleteFun" parameterType="Integer">
+        delete from t_customer where id = #{id}
+    </delete>
+
+<!--    添加-->
+    <insert id="insertFun" parameterType="Customer">
+        insert into t_customer(username,jobs,phone) value  (#{username},#{jobs},#{phone})
+    </insert>
+
+<!--修改功能用，根据主键查询，修改前先获取记录信息显  示-->
+    <select id="selectByIdFun" parameterType="Integer" resultType="Customer">
+        select * from t_customer where id =#{id}
+    </select>
+<!--根据主键修改-->
+    <update id="updateFun" parameterType="Customer">
+        update t_customer
+        <set>
+            <if test="username !=null and username !=''">
+                username=#{username},
+            </if>
+            <if test="jobs !=null and jobs !=''">
+                jobs=#{jobs},
+            </if>
+            <if test="phone !=null and phone !=''">
+                phone=#{phone},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+
+
+<!--    +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+    <!-- 定义查询条件的SQL片段 -->
+    <sql id="Costomer_where">
+        <if test="username !=null and username !=''">
+            and username like  '%${username}%'
+        </if>
+        <if test="jobs !=null and jobs !=''">
+            and jobs =#{jobs}
+        </if>
+        <if test="phone !=null and phone !=''">
+            and phone =#{phone}
+        </if>
+    </sql>
+
+
+    <!-- 条件查询-->
+    <select id="selectByConditionFun" parameterType="Customer"  resultType="Customer">
+        select * from t_customer
+        <where>
+            <include refid="Costomer_where"/>
+        </where>
+    </select>
+
+    <!-- 分页查询 ,查询数据库表里面的总记录数 -->
+    <select id="total" resultType="Integer">
+        select count(*) from t_customer
+    </select>
+
+    <!-- 分页查询 ,查询指定页数据-->
+    <select id="selectByConditionPageFun" parameterType="Page" resultType="Customer">
+        <!--     分页查询的语句 -->
+        select * from t_customer order by id asc
+        <!-- limit后第一个参数start，是起始查询位置（不包含），第二个参数是每页的数据条数。 -->
+        <!-- 举例：第3条数据（包含）到第8条数据（包含）共6条，那么start=2，count=8-2=6。 -->
+        <if test="start!=null and count!=null">
+            limit #{start},#{count}
+        </if>
+    </select>
+
+</mapper>

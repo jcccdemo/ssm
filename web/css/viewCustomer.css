@@ -1,0 +1,5 @@
+body{
+	background: linear-gradient(to right,#ebbba7 , #cfc7f8);
+		-webkit-background-clip:text;
+		size: 100px;
+}
